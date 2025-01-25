@@ -1,0 +1,42 @@
+CREATE TABLE Rider (
+    rider_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    email VARCHAR(100) UNIQUE,
+    phone_number VARCHAR(15),
+    rating FLOAT DEFAULT 0
+);
+
+CREATE TABLE Driver (
+    driver_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    email VARCHAR(100) UNIQUE,
+    phone_number VARCHAR(15),
+    car_details VARCHAR(100),
+    driver_mode BOOLEAN DEFAULT FALSE,
+    rating FLOAT DEFAULT 0
+);
+
+CREATE TABLE Ride (
+    ride_id INT PRIMARY KEY AUTO_INCREMENT,
+    rider_id INT,
+    driver_id INT,
+    pickup_location VARCHAR(100),
+    dropoff_location VARCHAR(100),
+    ride_timestamp DATETIME,
+    rating FLOAT,
+    FOREIGN KEY (rider_id) REFERENCES Rider(rider_id),
+    FOREIGN KEY (driver_id) REFERENCES Driver(driver_id)
+);
+
+
+INSERT INTO Rider (name, email, phone_number) VALUES
+('Alice', 'alice@example.com', '123-456-7890'),
+('Bob', 'bob@example.com', '098-765-4321');
+
+INSERT INTO Driver (name, email, phone_number, car_details) VALUES
+('Charlie', 'charlie@example.com', '555-555-5555', 'Toyota Camry'),
+('Dana', 'dana@example.com', '666-666-6666', 'Honda Civic');
+
+INSERT INTO Ride (rider_id, driver_id, pickup_location, dropoff_location, ride_timestamp) VALUES
+(1, 1, '123 Main St', '456 Oak St', NOW()),
+(2, 2, '789 Pine St', '101 Maple St', NOW());
